@@ -1,0 +1,1040 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c792ea; font-style: italic;}
+.s1 { color: #eeffff;}
+.s2 { color: #89ddff;}
+.s3 { color: #f78c6c;}
+.s4 { color: #616161; font-style: italic;}
+.s5 { color: #c3e88d;}
+</style>
+</head>
+<body bgcolor="#212121">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">dp</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">sql</span><span class="s2">.</span><span class="s1">SQLOutput</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Arrays</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Scanner</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">Main </span><span class="s2">{</span>
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">3</span><span class="s2">;</span>
+
+<span class="s4">//        System.out.println(&quot;Enter a number ... &quot;);</span>
+//        Scanner scn = new Scanner(System.in);
+//        int n = scn.nextInt();
+//        System.out.println(Fib(6));
+//        int fibn = FibMemoize(6, new int[6 + 1]);
+//        System.out.println(fibn);
+//        System.out.println(countPath(3));
+//        System.out.println(countPathMemoise(n, new int[n + 1]));
+//        System.out.println(countPathMemoise(n, new int[n+ 1]));
+//        System.out.println(countPathTabluation(n));
+//        System.out.println(countPathVariableJumps(6));
+//        System.out.println(minimumCostMazeTraversal());
+        <span class="s1">coinCombinations</span><span class="s2">();</span>
+<span class="s4">//        coinPermutations();</span>
+//        Knapsack01() ;
+//        System.out.println(Knapsack01());
+//        KnapsackUnbounded();
+//        countBinaryStrings() ;
+//        countBinaryStringsBetter() ;
+//        arrangeBuildings();
+//        countEncodings();
+//        countABCSubSequqnce();
+//        maximumSumNonAdjacentElements();
+//        paintHouse();
+//        paintHouseManyColors();
+//        paintFence() ;
+//        tiling();
+//        tiling2();
+//        buyAndSellStocks();
+//        buyAndSellStocksInfiniteTx();
+//        buyAndSellStocksInfiniteTxWithFees();
+//        buyAndSellStocksInfiniteTxWithFeesCooldown() ;
+
+//        buyAndSellStocksITwoTx() ;
+
+    <span class="s2">}</span>
+
+
+    <span class="s0">public static int </span><span class="s1">Fib</span><span class="s2">(</span><span class="s0">int </span><span class="s1">n</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">n </span><span class="s2">== </span><span class="s3">1 </span><span class="s2">|| </span><span class="s1">n </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s1">n</span><span class="s2">;</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Hello &quot; </span><span class="s2">+ </span><span class="s1">n</span><span class="s2">);</span>
+
+        <span class="s0">int </span><span class="s1">fibnm1 </span><span class="s2">= </span><span class="s1">Fib</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">fibnm2 </span><span class="s2">= </span><span class="s1">Fib</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">2</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">fibn </span><span class="s2">= </span><span class="s1">fibnm1 </span><span class="s2">+ </span><span class="s1">fibnm2</span><span class="s2">;</span>
+        <span class="s0">return </span><span class="s1">fibn</span><span class="s2">;</span>
+    }
+
+    <span class="s4">// dp has started, we will pass a question bank</span>
+    // n is question, return is answer
+    // n and its answer is stored in qb
+    //qb kitna bada hoga? 0 se n ka fib - n+1 size ka array bagega
+    <span class="s0">public static int </span><span class="s1">FibMemoize</span><span class="s2">(</span><span class="s0">int </span><span class="s1">n</span><span class="s2">, </span><span class="s0">int</span><span class="s2">[] </span><span class="s1">qb</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">n </span><span class="s2">== </span><span class="s3">1 </span><span class="s2">|| </span><span class="s1">n </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s1">n</span><span class="s2">;</span>
+        }
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">qb</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] != </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s1">qb</span><span class="s2">[</span><span class="s1">n</span><span class="s2">];</span>
+        }
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">qb</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">qb</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]);</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Hello &quot; </span><span class="s2">+ </span><span class="s1">n</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">fibnm1 </span><span class="s2">= </span><span class="s1">FibMemoize</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">, </span><span class="s1">qb</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">fibnm2 </span><span class="s2">= </span><span class="s1">FibMemoize</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">2</span><span class="s2">, </span><span class="s1">qb</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">fibn </span><span class="s2">= </span><span class="s1">fibnm1 </span><span class="s2">+ </span><span class="s1">fibnm2</span><span class="s2">;</span>
+        <span class="s1">qb</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] = </span><span class="s1">fibn</span><span class="s2">;</span>
+        <span class="s0">return </span><span class="s1">fibn</span><span class="s2">;</span>
+    }
+
+
+    <span class="s4">/* 
+    1. You are given a number n, representing the number of stairs in a staircase. 
+    2. You are on the 0th step and are required to climb to the top. 
+    3. In one move, you are allowed to climb 1, 2 or 3 stairs. 
+    4. You are required to print the number of different paths via which you can climb to the top. 
+    */</span>
+    <span class="s0">public static int </span><span class="s1">countPath</span><span class="s2">(</span><span class="s0">int </span><span class="s1">n</span><span class="s2">) {</span>
+        <span class="s4">// Climb stairs</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">n </span><span class="s2">&lt; </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s4">// yaha print nahi karna isiliye print nahi likha</span>
+            <span class="s0">return </span><span class="s3">0</span><span class="s2">;</span>
+        } <span class="s0">else if </span><span class="s2">(</span><span class="s1">n </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s3">1</span><span class="s2">;</span>
+        }
+        <span class="s4">// faith hai hamara - n se we can go to n-1, n-2, n-3 only</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Hello-&quot; </span><span class="s2">+ </span><span class="s1">n</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">nm1 </span><span class="s2">= </span><span class="s1">countPath</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">); </span><span class="s4">// we just need to give count, we dnt have to print it</span>
+        <span class="s0">int </span><span class="s1">nm2 </span><span class="s2">= </span><span class="s1">countPath</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">2</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">nm3 </span><span class="s2">= </span><span class="s1">countPath</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">3</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">cp </span><span class="s2">= </span><span class="s1">nm1 </span><span class="s2">+ </span><span class="s1">nm2 </span><span class="s2">+ </span><span class="s1">nm3</span><span class="s2">;</span>
+        <span class="s0">return </span><span class="s1">cp</span><span class="s2">;</span>
+    }
+
+    <span class="s0">public static int </span><span class="s1">countPathMemoise</span><span class="s2">(</span><span class="s0">int </span><span class="s1">n</span><span class="s2">, </span><span class="s0">int</span><span class="s2">[] </span><span class="s1">qb</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">n </span><span class="s2">&lt; </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s3">0</span><span class="s2">; </span><span class="s4">// ek bhi rasta nahi hai</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">n </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s3">1</span><span class="s2">; </span><span class="s4">// ek rasta hai ki chalo mat</span>
+        <span class="s2">}</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">qb</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] != </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s1">qb</span><span class="s2">[</span><span class="s1">n</span><span class="s2">];</span>
+        }
+        <span class="s4">// faith hai hamara - n se we can go to n-1, n-2, n-3 only</span>
+//        System.out.println(&quot;Hello-&quot; + n);
+        <span class="s0">int </span><span class="s1">nm1 </span><span class="s2">= </span><span class="s1">countPathMemoise</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">, </span><span class="s1">qb</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">nm2 </span><span class="s2">= </span><span class="s1">countPathMemoise</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">2</span><span class="s2">, </span><span class="s1">qb</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">nm3 </span><span class="s2">= </span><span class="s1">countPathMemoise</span><span class="s2">(</span><span class="s1">n </span><span class="s2">- </span><span class="s3">3</span><span class="s2">, </span><span class="s1">qb</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">cp </span><span class="s2">= </span><span class="s1">nm1 </span><span class="s2">+ </span><span class="s1">nm2 </span><span class="s2">+ </span><span class="s1">nm3</span><span class="s2">;</span>
+        <span class="s1">qb</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] = </span><span class="s1">cp</span><span class="s2">;</span>
+        <span class="s0">return </span><span class="s1">cp</span><span class="s2">;</span>
+    }
+
+
+    <span class="s0">public static int </span><span class="s1">countPathTabluation</span><span class="s2">(</span><span class="s0">int </span><span class="s1">n</span><span class="s2">) {</span>
+        <span class="s4">// uses iteration not recursion</span>
+        // make a array of size n + 1
+        // [1,2,2,4,7,13,24] -- we build the array from left to right
+        // each cell has meaning -&gt; ktine raste us stair tak pohuchne ke
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">]; </span><span class="s4">// makee a table</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">; </span><span class="s4">// 0 se 0 ka ek rasta hai</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt;= </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) { </span><span class="s4">//</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s3">1</span><span class="s2">) {</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]; </span><span class="s4">// i-1 se kitne raste hai... baki board ke bahar hai</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s3">2</span><span class="s2">) {</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">] + </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">2</span><span class="s2">];</span><span class="s4">// i-1 se kitne raste hai +  i-2 se kitne raste hai</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">] + </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">2</span><span class="s2">] + </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">3</span><span class="s2">]; </span><span class="s4">// i-1 se klitne raste hai +  i-2 se kitne raste hai + i-3 se kitne raste hai</span>
+            <span class="s2">}</span>
+
+        }
+        <span class="s0">return </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n</span><span class="s2">];</span>
+    }
+
+    <span class="s4">/* 
+    1. You are given a number n, representing the number of stairs in a staircase. 
+    2. You are on the 0th step and are required to climb to the top. 
+    3. You are given n numbers, where ith element's value represents - till how far from the step you could jump to in a single move.  You can of-course fewer number of steps in the move. 
+    4. You are required to print the number of different paths via which you can climb to the top.*/</span>
+    <span class="s0">public static int </span><span class="s1">countPathVariableJumps</span><span class="s2">(</span><span class="s0">int </span><span class="s1">n</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">arr</span><span class="s2">[] = {</span><span class="s3">3</span><span class="s2">, </span><span class="s3">3</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s3">2</span><span class="s2">, </span><span class="s3">2</span><span class="s2">, </span><span class="s3">3</span><span class="s2">};</span>
+        <span class="s4">//meaning ==&gt; at cell 3 we will store number of ways to go from 3 to 6</span>
+        // final dp will look like = [8,5,0,3,2,1,1]
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">]; </span><span class="s4">// storage n+1</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">; </span><span class="s4">//if n=6, 6 se 6 jane ka ek rasta hai - wahi khade raho</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&gt;= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i</span><span class="s2">--) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt;= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &amp;&amp; </span><span class="s1">i </span><span class="s2">+ </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] += </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s1">j</span><span class="s2">]; </span><span class="s4">//</span>
+            <span class="s2">}</span>
+        }
+        <span class="s0">return </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">];</span>
+    }
+
+    <span class="s4">/* 
+        Question 
+        1. You are given a number n, representing the number of stairs in a staircase. 
+        2. You are on the 0th step and are required to climb to the top. 
+        3. You are given n numbers, where ith element's value represents - till how far from the step you could jump to in a single move.  You can of-course fewer number of steps in the move. 
+        4. You are required to print the number of minimum moves in which you can reach the top of staircase. 
+        Note -&gt; If there is no path through the staircase print null. 
+        Input Format 
+        A number n 
+        .. n more elements 
+        Output Format 
+        A number representing the number of ways to climb the stairs from 0 to top.*/</span>
+    <span class="s0">public static int </span><span class="s1">climbStairsWithMinimumMoves</span><span class="s2">(</span><span class="s0">int </span><span class="s1">n</span><span class="s2">) {</span>
+
+        <span class="s4">// 10 steps hai to 11 ka array banao</span>
+        // direction right to left
+        <span class="s0">int </span><span class="s1">arr</span><span class="s2">[] = {</span><span class="s3">4</span><span class="s2">, </span><span class="s3">2</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s3">2</span><span class="s2">, </span><span class="s3">2</span><span class="s2">, </span><span class="s3">3</span><span class="s2">};</span>
+        <span class="s1">Integer</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Integer</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] = </span><span class="s3">0</span><span class="s2">;</span><span class="s4">//move zero hai</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&gt;= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i</span><span class="s2">--) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">arr</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] &gt; </span><span class="s3">0</span><span class="s2">) {</span><span class="s4">// tabhi age bade jab move allowed hai</span>
+                <span class="s0">int </span><span class="s1">min </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">;</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt;= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &amp;&amp; </span><span class="s1">i </span><span class="s2">+ </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s1">j</span><span class="s2">] != </span><span class="s0">null</span><span class="s2">) {</span><span class="s4">// null ko minimum calculate karne me use nahi karna hai</span>
+                        <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">min</span><span class="s2">, </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s1">j</span><span class="s2">]); </span><span class="s4">//jo bhi path minimum moves ka hai wo store karo</span>
+                        // sari jagaho ka min lene hai
+                    <span class="s2">}</span>
+                }
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">min </span><span class="s2">!= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">) {</span><span class="s4">//hame abhi tak rasta nahi mila</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">min </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">;</span>
+                }
+            }
+        }
+        <span class="s0">return </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">];</span>
+    }
+
+
+    <span class="s4">/*Question 
+    1. You are given a number n, representing the number of rows. 
+    2. You are given a number m, representing the number of columns. 
+    3. You are given n*m numbers, representing elements of 2d array a, which represents a maze. 
+    4. You are standing in top-left cell and are required to move to bottom-right cell. 
+    5. You are allowed to move 1 cell right (h move) or 1 cell down (v move) in 1 motion. 
+    6. Each cell has a value that will have to be paid to enter that cell (even for the top-left and bottom-right cell). 
+    7. You are required to traverse through the matrix and print the cost of path which is least costly.*/</span>
+    <span class="s0">public static int </span><span class="s1">minimumCostMazeTraversal</span><span class="s2">() {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">m </span><span class="s2">= </span><span class="s3">3</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[][] </span><span class="s1">arr </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[][]{</span>
+                {<span class="s3">2</span><span class="s2">, </span><span class="s3">2</span><span class="s2">, </span><span class="s3">3</span><span class="s2">},</span>
+                {<span class="s3">1</span><span class="s2">, </span><span class="s3">4</span><span class="s2">, </span><span class="s3">3</span><span class="s2">}</span>
+        };
+        <span class="s0">int</span><span class="s2">[][] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n</span><span class="s2">][</span><span class="s1">m</span><span class="s2">];</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&gt;= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i</span><span class="s2">--) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&gt;= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">j</span><span class="s2">--) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1 </span><span class="s2">|| </span><span class="s1">j </span><span class="s2">== </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) { </span><span class="s4">// last cell</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">];</span>
+                } <span class="s0">else if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) { </span><span class="s4">//last row</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">] + </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">]; </span><span class="s4">//horizonatal aage ja sakte--paise  j se j+1</span>
+                <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">j </span><span class="s2">== </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">) { </span><span class="s4">// last col</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] + </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">];</span>
+                } <span class="s0">else </span><span class="s2">{</span><span class="s4">//na last cell na last col na last row</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">]) + </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">];</span><span class="s4">//right plus below ka min</span>
+                <span class="s2">}</span>
+            }
+        }
+
+        <span class="s0">return </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">0</span><span class="s2">];</span>
+    }
+
+
+    <span class="s0">public static int </span><span class="s1">goldMine</span><span class="s2">() {</span>
+        <span class="s4">/* 
+        https://www.pepcoding.com/resources/online-java-foundation/dynamic-programming-and-greedy/goldmine-official/ojquestion 
+        * 
+        1. You are given a number n, representing the number of rows. 
+        2. You are given a number m, representing the number of columns. 
+        3. You are given n*m numbers, representing elements of 2d array a, which represents a gold mine. 
+        4. You are standing in front of left wall and are supposed to dig to the right wall. You can start from any row in the left wall. 
+        5. You are allowed to move 1 cell right-up (d1), 1 cell right (d2) or 1 cell right-down(d3). 
+*/</span>
+
+
+        <span class="s0">int </span><span class="s1">arr</span><span class="s2">[][] = </span><span class="s0">new int</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">2</span><span class="s2">]; </span><span class="s4">//You are given n*m numbers</span>
+        <span class="s0">int </span><span class="s1">dp</span><span class="s2">[][] = </span><span class="s0">new int</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">2</span><span class="s2">];</span>
+
+        <span class="s4">// max goal kaunsa raste lene pe milega -</span>
+        // dependent cells solve hone chahiye
+        // direction - right to left
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&gt;= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">j</span><span class="s2">--) { </span><span class="s4">// max to least column</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&gt;= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i</span><span class="s2">--) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">j </span><span class="s2">== </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) {</span><span class="s4">//last columns - same as srr</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">];</span>
+                } <span class="s0">else if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span><span class="s4">// pehla row = 2 hi option hai = right and right below</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] + </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">max</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">]); </span><span class="s4">// arr[i][j] =apna gold ,,,Math.max(dp[i][j + 1], dp[i + 1][j + 1]);</span>
+                <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) {</span><span class="s4">// last row = option 2 hi hai sirf = right and upper right</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] + </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">max</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">]);</span>
+                } <span class="s0">else </span><span class="s2">{</span><span class="s4">//baki ke</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] + </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">max</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">], </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">max</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">]));</span>
+                }
+            }
+        }
+        <span class="s0">int </span><span class="s1">max </span><span class="s2">= </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">0</span><span class="s2">];</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] &gt; </span><span class="s1">max</span><span class="s2">) {</span>
+                <span class="s1">max </span><span class="s2">= </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">0</span><span class="s2">];</span>
+            }
+        }
+
+        <span class="s0">return </span><span class="s1">max</span><span class="s2">;</span>
+    }
+
+
+    <span class="s0">public static void </span><span class="s1">targetSumSubset</span><span class="s2">() {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">arr </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n</span><span class="s2">];</span>
+
+        <span class="s0">int </span><span class="s1">tar </span><span class="s2">= </span><span class="s3">10</span><span class="s2">;</span>
+        <span class="s0">boolean</span><span class="s2">[][] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new boolean</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">][</span><span class="s1">tar </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+
+        <span class="s4">// we will divide in 4 parts</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s3">0 </span><span class="s2">&amp;&amp; </span><span class="s1">j </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s0">true</span><span class="s2">;</span>
+                } <span class="s0">else if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s0">false</span><span class="s2">;</span>
+                } <span class="s0">else if </span><span class="s2">(</span><span class="s1">j </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s0">true</span><span class="s2">;</span>
+                } <span class="s0">else </span><span class="s2">{</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] == </span><span class="s0">true</span><span class="s2">) {</span><span class="s4">// when you did not bat at all</span>
+                        // .... pehle wali team ko bana lene the sare run
+                        <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s0">true</span><span class="s2">;</span>
+                    } <span class="s0">else </span><span class="s2">{</span><span class="s4">//abb batting karani padegi ...</span>
+                        // uske liye
+
+                        <span class="s0">int </span><span class="s1">val </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]; </span><span class="s4">//i-1 agar i 3 hai dp me to</span>
+                        // array me i-1
+                        <span class="s0">if </span><span class="s2">(</span><span class="s1">j </span><span class="s2">&gt;= </span><span class="s1">val</span><span class="s2">) { </span><span class="s4">// isne j score kar diya...bakie team ko</span>
+                            // j-val score karne diye hone honge
+                            <span class="s0">if </span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j </span><span class="s2">- </span><span class="s1">val</span><span class="s2">] == </span><span class="s0">true</span><span class="s2">) {</span><span class="s4">//baki ke run = j -  val</span>
+                                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s0">true</span><span class="s2">;</span>
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">][</span><span class="s1">tar</span><span class="s2">]);</span>
+    }
+
+
+    <span class="s0">public static void </span><span class="s1">coinCombinations</span><span class="s2">() {</span>
+<span class="s4">//        int [] arr = {2,3,5}; amt = 7</span>
+        // see notes
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">arr </span><span class="s2">= {</span><span class="s3">2</span><span class="s2">, </span><span class="s3">3</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">6</span><span class="s2">};</span>
+        <span class="s0">int </span><span class="s1">amt </span><span class="s2">= </span><span class="s3">10</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">amt </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span><span class="s4">// kuch len den na kare</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span><span class="s4">//bahar wala hai coins ka loop, pehle 2, fir 3  and so on</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;i is =&gt; &quot; </span><span class="s2">+ </span><span class="s1">i</span><span class="s2">);</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]; </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) { </span><span class="s4">///j = 2 to 2 se aage chalaye, 1 amount 3 ke coin se nahi de sakte</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;</span><span class="s2">\t</span><span class="s5">j is =&gt; &quot; </span><span class="s2">+ </span><span class="s1">j</span><span class="s2">);</span>
+<span class="s4">//                System.out.println(&quot;i is =&gt;&quot;+i);</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">j</span><span class="s2">] + </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">j </span><span class="s2">- </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]];</span><span class="s4">// j is dp wla index, i is coin</span>
+                //coin jitna peche jao dp me
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;</span><span class="s2">\t\t</span><span class="s5">dp[j] is =&gt; &quot; </span><span class="s2">+ </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">j</span><span class="s2">]);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">();</span>
+            }
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">amt</span><span class="s2">]);</span>
+    }
+
+    <span class="s0">public static void </span><span class="s1">coinPermutations</span><span class="s2">() {</span>
+<span class="s4">//        int [] arr = {2,3,5}; amt = 7</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">coins </span><span class="s2">= {</span><span class="s3">2</span><span class="s2">, </span><span class="s3">3</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">6</span><span class="s2">};</span>
+        <span class="s0">int </span><span class="s1">tar </span><span class="s2">= </span><span class="s3">10</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">tar </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">amt </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">amt </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">amt</span><span class="s2">++) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">coin </span><span class="s2">: </span><span class="s1">coins</span><span class="s2">) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">coin </span><span class="s2">&lt;= </span><span class="s1">amt</span><span class="s2">) {</span>
+                    <span class="s0">int </span><span class="s1">remAmount </span><span class="s2">= </span><span class="s1">amt </span><span class="s2">- </span><span class="s1">coin</span><span class="s2">;</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">amt</span><span class="s2">] += </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">remAmount</span><span class="s2">];</span>
+                }
+            }
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">tar</span><span class="s2">]);</span>
+    }
+
+    <span class="s4">/*1. You are given a number n, representing the count of items. 
+    2. You are given n numbers, representing the values of n items. 
+    3. You are given n numbers, representing the weights of n items. 
+    3. You are given a number &quot;cap&quot;, which is the capacity of a bag you've. 
+    4. You are required to calculate and print the maximum value that can be created in the bag without overflowing it's capacity. 
+    Note1 -&gt; Each item can be taken 0 or 1 number of times. You are not allowed to put the same item again and again. 
+ 
+    public static void printSS(String question, String answer) { 
+        if (question.length() == 0) { 
+        System.out.println(answer); 
+        return; 
+    } 
+    char ch = question.charAt(0); 
+    String ros = question.substring(1); 
+ 
+    printSS(ros, answer + &quot;&quot;); 
+    printSS(ros, answer + ch); 
+} 
+ 
+*/</span>
+    <span class="s0">public static int </span><span class="s1">Knapsack01</span><span class="s2">() {</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">vals </span><span class="s2">= {</span><span class="s3">15</span><span class="s2">, </span><span class="s3">14</span><span class="s2">, </span><span class="s3">10</span><span class="s2">, </span><span class="s3">45</span><span class="s2">, </span><span class="s3">30</span><span class="s2">};</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">wts </span><span class="s2">= {</span><span class="s3">2</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">1</span><span class="s2">, </span><span class="s3">3</span><span class="s2">, </span><span class="s3">4</span><span class="s2">};</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">cap </span><span class="s2">= </span><span class="s3">7</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[][] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">][</span><span class="s1">cap </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span><span class="s4">//loop kaha se chal raha hai??by default 0 bhara hua hota hai</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span><span class="s4">//row by row solve kar rahe hai</span>
+                //we will solve row by row
+                // aggar isse batting nahi karao to upar wali  row se purane runs utha lo
+
+                // j = balls
+                // i = players
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">j </span><span class="s2">&gt;= </span><span class="s1">wts</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]) {</span>
+                    <span class="s4">// sufficient balls hai batting kra sakte</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j </span><span class="s2">- </span><span class="s1">wts</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]] + </span><span class="s1">vals</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">] &gt; </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j</span><span class="s2">]) {</span>
+                        <span class="s4">//https://youtu.be/bUSaenttI24?t=1481</span>
+                        //i-1 is baki ki team
+                        // bachi hui balls [j - wts[i - 1]
+
+                        //dp[i-1][j - wts[i-1]] == upar ka row, j - wts[i-1] col pe
+                        // hai baki team ne jo bachi hui balls pe run banaye
+
+                        // vals[i] pe abhi wale bande ne kitne run banaye
+                        // batting nahi karta jba
+                        <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j </span><span class="s2">- </span><span class="s1">wts</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]] + </span><span class="s1">vals</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">];</span>
+                    } <span class="s0">else </span><span class="s2">{</span>
+                        <span class="s4">// isko batting karane se fayeda nahi, mat karao batting isse</span>
+                        <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j</span><span class="s2">]; </span><span class="s4">// when I doesnt bat</span>
+                    <span class="s2">}</span>
+                }
+                <span class="s4">// balls hi nhi hia purani team ke run uthao</span>
+                <span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">j</span><span class="s2">];</span><span class="s4">// when doesn't bat, i-1 ki team ko j balls mil gai</span>
+                <span class="s2">}</span>
+            }
+        }
+        <span class="s0">return </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n</span><span class="s2">][</span><span class="s1">cap</span><span class="s2">];</span>
+    }
+
+    <span class="s0">public static void </span><span class="s1">KnapsackUnbounded</span><span class="s2">() {</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">vals </span><span class="s2">= {</span><span class="s3">15</span><span class="s2">, </span><span class="s3">14</span><span class="s2">, </span><span class="s3">10</span><span class="s2">, </span><span class="s3">45</span><span class="s2">, </span><span class="s3">30</span><span class="s2">};</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">wts </span><span class="s2">= {</span><span class="s3">2</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">1</span><span class="s2">, </span><span class="s3">3</span><span class="s2">, </span><span class="s3">4</span><span class="s2">};</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">cap </span><span class="s2">= </span><span class="s3">7</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">cap </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">0</span><span class="s2">; </span><span class="s4">// 0 kg bag me kuch nahi aa sakta</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">bagCapacity </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">bagCapacity </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">bagCapacity</span><span class="s2">++) {</span>
+            <span class="s0">int </span><span class="s1">max </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">wts</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &lt;= </span><span class="s1">bagCapacity</span><span class="s2">) {</span>
+                    <span class="s0">int </span><span class="s1">remainingBagCapacity </span><span class="s2">= </span><span class="s1">bagCapacity </span><span class="s2">- </span><span class="s1">wts</span><span class="s2">[</span><span class="s1">i</span><span class="s2">];</span>
+                    <span class="s0">int </span><span class="s1">remainingBagValue </span><span class="s2">= </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">remainingBagCapacity</span><span class="s2">];</span>
+                    <span class="s0">int </span><span class="s1">totalBagValue </span><span class="s2">= </span><span class="s1">remainingBagValue </span><span class="s2">+ </span><span class="s1">vals</span><span class="s2">[</span><span class="s1">i</span><span class="s2">];</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">totalBagValue </span><span class="s2">&gt; </span><span class="s1">max</span><span class="s2">) {</span>
+                        <span class="s1">max </span><span class="s2">= </span><span class="s1">totalBagValue</span><span class="s2">;</span>
+                    }
+                }
+            }
+            <span class="s1">dp</span><span class="s2">[</span><span class="s1">bagCapacity</span><span class="s2">] = </span><span class="s1">max</span><span class="s2">;</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">cap</span><span class="s2">]);</span>
+    }
+
+
+    <span class="s4">/*Question 
+        1. You are given a number n. 
+        2. You are required to print the number of binary strings of length n with no consecutive 0's. 
+        Input Format 
+        A number n 
+        Output Format 
+        A number representing the number of binary strings of length n with no consecutive 0's. 
+        Constraints 
+        0 &lt; n &lt;= 45 
+        Sample Input 
+        6 
+        Sample Output 
+        21 
+*/</span>
+    <span class="s0">public static void </span><span class="s1">countBinaryStrings</span><span class="s2">() {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">6</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp0 </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp1 </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp0</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">dp1</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">dp0</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">dp1</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">2</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt;= </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s1">dp1</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp1</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">] + </span><span class="s1">dp0</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">];</span>
+            <span class="s1">dp0</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp1</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">];</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp1</span><span class="s2">[</span><span class="s1">n</span><span class="s2">] + </span><span class="s1">dp0</span><span class="s2">[</span><span class="s1">n</span><span class="s2">]);</span>
+    }
+
+    <span class="s0">public static void </span><span class="s1">countBinaryStringsBetter</span><span class="s2">() {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">6</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">oldcountzeros </span><span class="s2">= </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">oldcountones </span><span class="s2">= </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">2</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt;= </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">int </span><span class="s1">newCountZeros </span><span class="s2">= </span><span class="s1">oldcountones</span><span class="s2">;</span>
+            <span class="s0">int </span><span class="s1">newCountOnes </span><span class="s2">= </span><span class="s1">oldcountones </span><span class="s2">+ </span><span class="s1">oldcountzeros</span><span class="s2">;</span>
+            <span class="s1">oldcountones </span><span class="s2">= </span><span class="s1">newCountOnes</span><span class="s2">;</span>
+            <span class="s1">oldcountzeros </span><span class="s2">= </span><span class="s1">newCountZeros</span><span class="s2">;</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">oldcountones </span><span class="s2">+ </span><span class="s1">oldcountzeros</span><span class="s2">);</span>
+    }
+
+    <span class="s0">public static void </span><span class="s1">arrangeBuildings</span><span class="s2">() {</span>
+        <span class="s0">long </span><span class="s1">n </span><span class="s2">= </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">oldBuilding </span><span class="s2">= </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">oldSpace </span><span class="s2">= </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">2</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt;= </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">int </span><span class="s1">newBuilding </span><span class="s2">= </span><span class="s1">oldSpace</span><span class="s2">;</span>
+            <span class="s0">int </span><span class="s1">newSpace </span><span class="s2">= </span><span class="s1">oldBuilding </span><span class="s2">+ </span><span class="s1">oldSpace</span><span class="s2">;</span>
+            <span class="s1">oldSpace </span><span class="s2">= </span><span class="s1">newSpace</span><span class="s2">;</span>
+            <span class="s1">oldBuilding </span><span class="s2">= </span><span class="s1">newBuilding</span><span class="s2">;</span>
+        }
+        <span class="s0">int </span><span class="s1">total </span><span class="s2">= </span><span class="s1">oldSpace </span><span class="s2">+ </span><span class="s1">oldBuilding</span><span class="s2">;</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">total </span><span class="s2">* </span><span class="s1">total</span><span class="s2">);</span>
+    }
+
+    <span class="s0">public static void </span><span class="s1">countEncodings</span><span class="s2">() {</span>
+        <span class="s1">String str </span><span class="s2">= </span><span class="s5">&quot;21123&quot;</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">str</span><span class="s2">.</span><span class="s1">length</span><span class="s2">()];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) == </span><span class="s5">'0' </span><span class="s2">&amp;&amp; </span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i</span><span class="s2">) == </span><span class="s5">'0'</span><span class="s2">) {</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s3">0</span><span class="s2">;</span>
+            } <span class="s0">else if </span><span class="s2">(</span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) == </span><span class="s5">'0' </span><span class="s2">&amp;&amp; </span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i</span><span class="s2">) != </span><span class="s5">'0'</span><span class="s2">) {</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">];</span>
+            } <span class="s0">else if </span><span class="s2">(</span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) != </span><span class="s5">'0' </span><span class="s2">&amp;&amp; </span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i</span><span class="s2">) == </span><span class="s5">'0'</span><span class="s2">) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) == </span><span class="s5">'1' </span><span class="s2">|| </span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) == </span><span class="s5">'2'</span><span class="s2">) {</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">i </span><span class="s2">&gt; </span><span class="s3">2 </span><span class="s2">? </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">2</span><span class="s2">] : </span><span class="s3">1</span><span class="s2">;</span>
+                } <span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s3">0</span><span class="s2">;</span>
+                }
+
+            } <span class="s0">else </span><span class="s2">{</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">str</span><span class="s2">.</span><span class="s1">substring</span><span class="s2">(</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">, </span><span class="s1">i </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">)) &lt;= </span><span class="s3">26</span><span class="s2">) {</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">] + (</span><span class="s1">i </span><span class="s2">&gt;= </span><span class="s3">2 </span><span class="s2">? </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">2</span><span class="s2">] : </span><span class="s3">1</span><span class="s2">);</span>
+                } <span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">];</span>
+                }
+            }
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">str</span><span class="s2">.</span><span class="s1">length</span><span class="s2">() - </span><span class="s3">1</span><span class="s2">]);</span>
+    }
+
+    <span class="s4">/* 
+    Question 
+        1. You are given a string str. 
+        2. You are required to calculate and print the count of subsequences of the nature a+b+c+. 
+        For abbc -&gt; there are 3 subsequences. abc, abc, abbc 
+        For abcabc -&gt; there are 7 subsequences. abc, abc, abbc, aabc, abcc, abc, abc. 
+        Input Format 
+        A string str 
+        Output Format 
+        count of subsequences of the nature a+b+c+ 
+        Constraints 
+        0 &lt; str.length &lt;= 10 
+        Sample Input 
+        abcabc 
+    */</span>
+    <span class="s0">public static void </span><span class="s1">countABCSubSequqnce</span><span class="s2">() {</span>
+        <span class="s1">String str </span><span class="s2">= </span><span class="s5">&quot;abcabc&quot;</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">a </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">ab </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">abc </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">str</span><span class="s2">.</span><span class="s1">length</span><span class="s2">(); </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">char </span><span class="s1">ch </span><span class="s2">= </span><span class="s1">str</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i</span><span class="s2">);</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">ch </span><span class="s2">== </span><span class="s5">'a'</span><span class="s2">) {</span>
+                <span class="s1">a </span><span class="s2">= </span><span class="s3">2 </span><span class="s2">* </span><span class="s1">a </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">;</span>
+            } <span class="s0">else if </span><span class="s2">(</span><span class="s1">ch </span><span class="s2">== </span><span class="s5">'b'</span><span class="s2">) {</span>
+                <span class="s1">ab </span><span class="s2">= </span><span class="s3">2 </span><span class="s2">* </span><span class="s1">ab </span><span class="s2">+ </span><span class="s1">a</span><span class="s2">;</span>
+            } <span class="s0">else if </span><span class="s2">(</span><span class="s1">ch </span><span class="s2">== </span><span class="s5">'c'</span><span class="s2">) {</span>
+                <span class="s1">abc </span><span class="s2">= </span><span class="s3">2 </span><span class="s2">* </span><span class="s1">abc </span><span class="s2">+ </span><span class="s1">ab</span><span class="s2">;</span>
+            }
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">abc</span><span class="s2">);</span>
+    }
+
+    <span class="s4">/*Question 
+        1. You are given a number n, representing the count of elements. 
+        2. You are given n numbers, representing n elements. 
+        3. You are required to find the maximum sum of a subsequence with no adjacent elements. 
+        Input Format 
+        A number n 
+        n1 
+        n2 
+        .. n number of elements 
+        Output Format 
+        A number representing the maximum sum of a subsequence with no adjacent elements. 
+        Constraints 
+        1 &lt;= n &lt;= 1000 
+        -1000 &lt;= n1, n2, .. n elements &lt;= 1000 
+        Sample Input 
+        6 
+        5 
+        10 
+        10 
+        100 
+        5 
+        6 
+        Sample Output 
+        116 
+*/</span>
+    <span class="s0">public static void </span><span class="s1">maximumSumNonAdjacentElements</span><span class="s2">() {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">6</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">arr </span><span class="s2">= {</span><span class="s3">5</span><span class="s2">, </span><span class="s3">10</span><span class="s2">, </span><span class="s3">10</span><span class="s2">, </span><span class="s3">100</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">6</span><span class="s2">};</span>
+
+        <span class="s0">int </span><span class="s1">inc </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">];</span>
+        <span class="s0">int </span><span class="s1">exc </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">int </span><span class="s1">newinc </span><span class="s2">= </span><span class="s1">exc </span><span class="s2">+ </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">];</span>
+            <span class="s0">int </span><span class="s1">newexc </span><span class="s2">= </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">max</span><span class="s2">(</span><span class="s1">inc</span><span class="s2">, </span><span class="s1">exc</span><span class="s2">);</span>
+
+            <span class="s1">inc </span><span class="s2">= </span><span class="s1">newinc</span><span class="s2">;</span>
+            <span class="s1">exc </span><span class="s2">= </span><span class="s1">newexc</span><span class="s2">;</span>
+        }
+        <span class="s0">int </span><span class="s1">ans </span><span class="s2">= </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">max</span><span class="s2">(</span><span class="s1">inc</span><span class="s2">, </span><span class="s1">exc</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">ans</span><span class="s2">);</span>
+
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">();</span>
+    }
+
+
+    <span class="s4">/* 
+            * Question 
+        1. You are given a number n, representing the number of houses. 
+        2. In the next n rows, you are given 3 space separated numbers representing the cost of painting nth house with red or blue or green color. 
+        3. You are required to calculate and print the minimum cost of painting all houses without painting any consecutive house with same color. 
+        Input Format 
+        A number n 
+        n1red n1blue n1green 
+        n2red n2blue n2green 
+        .. n number of elements 
+        Output Format 
+        A number representing the minimum cost of painting all houses without painting any consecutive house with same color. 
+        Constraints 
+        1 &lt;= n &lt;= 1000 
+        0 &lt;= n1red, n1blue, .. &lt;= 1000 
+        Sample Input 
+        4 
+        1 5 7 
+        5 8 4 
+        3 2 9 
+        1 2 4 
+        Sample Output 
+        8 
+    * */</span>
+    <span class="s0">public static void </span><span class="s1">paintHouse</span><span class="s2">() {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">4</span><span class="s2">; </span><span class="s4">// number of houses</span>
+        <span class="s0">int</span><span class="s2">[][] </span><span class="s1">arr </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n</span><span class="s2">][</span><span class="s3">3</span><span class="s2">];</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">7</span><span class="s2">;</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">8</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">4</span><span class="s2">;</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">3</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">9</span><span class="s2">;</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">4</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">]);</span>
+            }
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;&quot;</span><span class="s2">);</span>
+        }
+
+        <span class="s0">long</span><span class="s2">[][] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new long</span><span class="s2">[</span><span class="s1">n</span><span class="s2">][</span><span class="s3">3</span><span class="s2">];</span>
+
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">0</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">2</span><span class="s2">];</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] + </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">1</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">2</span><span class="s2">]);</span><span class="s4">//pichle ghar ka blue ya green</span>
+            <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] + </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">0</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">2</span><span class="s2">]);</span>
+            <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] + </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">0</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">1</span><span class="s2">]);</span>
+        }
+        <span class="s0">long </span><span class="s1">ans </span><span class="s2">= </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">0</span><span class="s2">], </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">1</span><span class="s2">], </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s3">2</span><span class="s2">]));</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">ans</span><span class="s2">);</span>
+    }
+
+    <span class="s4">/* 
+    Question 
+        1. You are given a number n and a number k separated by a space, representing the number of houses and number of colors. 
+        2. In the next n rows, you are given k space separated numbers representing the cost of painting nth house with one of the k colors. 
+        3. You are required to calculate and print the minimum cost of painting all houses without painting any consecutive house with same color. 
+ 
+        Input Format 
+        A number n 
+        n1-0th n1-1st n1-2nd .. n1-kth 
+        n2-0th n2-1st n2-2nd .. n2-kth 
+        .. n number of elements 
+ 
+        Output Format 
+        A number representing the minimum cost of painting all houses without painting any consecutive house with same color. 
+        Constraints 
+        1 &lt;= n &lt;= 1000 
+        1 &lt;= k &lt;= 10 
+        0 &lt;= n1-0th, n1-1st, .. &lt;= 1000 
+ 
+        Sample Input 
+        4 3 
+        1 5 7 
+        5 8 4 
+        3 2 9 
+        1 2 4 
+ 
+        Sample Output 
+        8 
+*/</span>
+    <span class="s0">public static void </span><span class="s1">paintHouseManyColors</span><span class="s2">() {</span>
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">4</span><span class="s2">; </span><span class="s4">// number of houses</span>
+        <span class="s0">int </span><span class="s1">c </span><span class="s2">= </span><span class="s3">6</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[][] </span><span class="s1">arr </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n</span><span class="s2">][</span><span class="s1">c</span><span class="s2">];</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">7</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">3</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">4</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s3">5</span><span class="s2">] = </span><span class="s3">4</span><span class="s2">;</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">5</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">8</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">4</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">3</span><span class="s2">] = </span><span class="s3">3</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">4</span><span class="s2">] = </span><span class="s3">6</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">1</span><span class="s2">][</span><span class="s3">5</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">3</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">9</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">3</span><span class="s2">] = </span><span class="s3">7</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">4</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">2</span><span class="s2">][</span><span class="s3">5</span><span class="s2">] = </span><span class="s3">3</span><span class="s2">;</span>
+
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">0</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">4</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">3</span><span class="s2">] = </span><span class="s3">9</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">4</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">arr</span><span class="s2">[</span><span class="s3">3</span><span class="s2">][</span><span class="s3">5</span><span class="s2">] = </span><span class="s3">7</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">]);</span>
+            }
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;&quot;</span><span class="s2">);</span>
+        }
+<span class="s4">//</span>
+        <span class="s0">int</span><span class="s2">[][] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n</span><span class="s2">][</span><span class="s1">c</span><span class="s2">];</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span><span class="s4">// pehli row fill karlo</span>
+            <span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">][</span><span class="s1">j</span><span class="s2">];</span>
+        }
+
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">j </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">j </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">j</span><span class="s2">++) {</span>
+                <span class="s4">// i ghar ka number hai</span>
+                // j color ka number hai
+                <span class="s0">int </span><span class="s1">min </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">;</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">k </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">k </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">k</span><span class="s2">++) {</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">k </span><span class="s2">!= </span><span class="s1">j</span><span class="s2">) {</span>
+                        <span class="s0">if </span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">k</span><span class="s2">] &lt; </span><span class="s1">min</span><span class="s2">) { </span><span class="s4">// pichli row</span>
+                            <span class="s1">min </span><span class="s2">= </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">k</span><span class="s2">];</span>
+                        }
+                    }
+                }
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] = </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s1">j</span><span class="s2">] + </span><span class="s1">min</span><span class="s2">; </span><span class="s4">// apna new color =arr[i][j]</span>
+            <span class="s2">}</span>
+        }
+        <span class="s0">int </span><span class="s1">min </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">k </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">k </span><span class="s2">&lt; </span><span class="s1">dp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">].</span><span class="s1">length</span><span class="s2">; </span><span class="s1">k</span><span class="s2">++) {</span><span class="s4">// akhri row ka min</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">k</span><span class="s2">] &lt; </span><span class="s1">min</span><span class="s2">) {</span><span class="s4">// akri row = dp[n - 1]</span>
+                <span class="s1">min </span><span class="s2">= </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n </span><span class="s2">- </span><span class="s3">1</span><span class="s2">][</span><span class="s1">k</span><span class="s2">];</span>
+            }
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">min</span><span class="s2">);</span>
+    }
+
+    <span class="s4">/*Question 
+        1. You are given a number n and a number k in separate lines, representing the number of fences and number of colors. 
+        2. You are required to calculate and print the number of ways in which the fences could be painted so that not more than two fences have same colors. 
+ 
+        Input Format 
+        A number n 
+        A number k 
+ 
+        Output Format 
+        A number representing the number of ways in which the fences could be painted so that not more than two fences have same colors. 
+ 
+        Constraints 
+        1 &lt;= n &lt;= 10 
+        1 &lt;= k &lt;= 10 
+ 
+        Sample Input 
+        8 
+        3 
+ 
+        Sample Output 
+        3672 
+*/</span>
+    <span class="s0">public static void </span><span class="s1">paintFence</span><span class="s2">() {</span>
+        <span class="s1">Scanner scn </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">((</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">));</span>
+<span class="s4">//        int n = scn.nextInt() ;</span>
+//        int k = scn.nextInt() ;
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">8</span><span class="s2">; </span><span class="s4">// number of fences</span>
+        <span class="s0">int </span><span class="s1">k </span><span class="s2">= </span><span class="s3">3</span><span class="s2">; </span><span class="s4">// number of colors</span>
+        // A number representing the number of ways in which the fences
+        // could be painted so that not more than two fences have same colors.
+        <span class="s0">int </span><span class="s1">same </span><span class="s2">= </span><span class="s1">k </span><span class="s2">* </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">diff </span><span class="s2">= </span><span class="s1">k </span><span class="s2">* (</span><span class="s1">k </span><span class="s2">- </span><span class="s3">1</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">total </span><span class="s2">= </span><span class="s1">same </span><span class="s2">+ </span><span class="s1">diff</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">3</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt;= </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s1">same </span><span class="s2">= </span><span class="s1">diff </span><span class="s2">* </span><span class="s3">1</span><span class="s2">;</span>
+            <span class="s1">diff </span><span class="s2">= </span><span class="s1">total </span><span class="s2">* (</span><span class="s1">k </span><span class="s2">- </span><span class="s3">1</span><span class="s2">);</span>
+            <span class="s1">total </span><span class="s2">= </span><span class="s1">same </span><span class="s2">+ </span><span class="s1">diff</span><span class="s2">;</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">total</span><span class="s2">);</span>
+    }
+
+
+    <span class="s4">/* 
+    Question 
+    1. You are given a number n representing the length of a floor space which is 2m wide. It's a 2 * n board. 
+    2. You've an infinite supply of 2 * 1 tiles. 
+    3. You are required to calculate and print the number of ways floor can be tiled using tiles. 
+ 
+    Input Format 
+    A number n 
+ 
+    Output Format 
+    A number representing the number of ways in which the number of ways floor can be tiled using tiles. 
+ 
+    Constraints 
+    1 &lt;= n &lt;= 100 
+ 
+    Sample Input 
+    8 
+ 
+    Sample Output 
+    34 
+    */</span>
+    <span class="s0">public static void </span><span class="s1">tiling</span><span class="s2">() {</span>
+<span class="s4">//        Scanner scn = new Scanner(System.in);</span>
+//        int n = scn.nextInt();
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">4</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">3</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt;= </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">] + </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">2</span><span class="s2">];</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n</span><span class="s2">]);</span>
+    }
+
+    <span class="s0">public static void </span><span class="s1">tiling2</span><span class="s2">() {</span>
+<span class="s4">//        Scanner scn = new Scanner(System.in);</span>
+//        int n = scn.nextInt();
+//        int m = scn.nextInt();
+        <span class="s0">int </span><span class="s1">n </span><span class="s2">= </span><span class="s3">8</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">m </span><span class="s2">= </span><span class="s3">3</span><span class="s2">;</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dp </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">n </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s1">dp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">2</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt;= </span><span class="s1">n</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">m</span><span class="s2">) {</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s3">1</span><span class="s2">;</span>
+            } <span class="s0">else if </span><span class="s2">(</span><span class="s1">i </span><span class="s2">== </span><span class="s1">m</span><span class="s2">) {</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s3">2</span><span class="s2">;</span>
+            } <span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">dp</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">] + </span><span class="s1">dp</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s1">m</span><span class="s2">];</span>
+            }
+        }
+
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">dp</span><span class="s2">[</span><span class="s1">n</span><span class="s2">]);</span>
+    }
+
+
+    <span class="s0">public static void </span><span class="s1">buyAndSellStocks</span><span class="s2">() {</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">prices </span><span class="s2">= {</span><span class="s3">1</span><span class="s2">, </span><span class="s3">2</span><span class="s2">, </span><span class="s3">3</span><span class="s2">};</span>
+        <span class="s0">int </span><span class="s1">lsf </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">op </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">pist </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">prices</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">prices</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &lt; </span><span class="s1">lsf</span><span class="s2">) {</span>
+                <span class="s1">lsf </span><span class="s2">= </span><span class="s1">prices</span><span class="s2">[</span><span class="s1">i</span><span class="s2">];</span>
+            }
+            <span class="s1">pist </span><span class="s2">= </span><span class="s1">prices</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] - </span><span class="s1">lsf</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">pist </span><span class="s2">&gt; </span><span class="s1">op</span><span class="s2">) {</span>
+                <span class="s1">op </span><span class="s2">= </span><span class="s1">pist</span><span class="s2">;</span>
+            }
+
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">op</span><span class="s2">);</span>
+    }
+
+
+    <span class="s0">public static void </span><span class="s1">buyAndSellStocksInfiniteTxWithFees</span><span class="s2">() {</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">arr </span><span class="s2">= {</span><span class="s3">10</span><span class="s2">, </span><span class="s3">20</span><span class="s2">, </span><span class="s3">30</span><span class="s2">};</span>
+        <span class="s0">int </span><span class="s1">obsp </span><span class="s2">= -</span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">];</span>
+        <span class="s0">int </span><span class="s1">ossp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">fee </span><span class="s2">= </span><span class="s3">2</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">int </span><span class="s1">nbsp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+            <span class="s0">int </span><span class="s1">nssp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+
+            <span class="s4">// ajj buy karne ke options</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">ossp </span><span class="s2">- </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &gt; </span><span class="s1">obsp</span><span class="s2">) { </span><span class="s4">// naya stock arr[i] ka hai</span>
+                <span class="s1">nbsp </span><span class="s2">= </span><span class="s1">ossp </span><span class="s2">- </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]; </span><span class="s4">// agar stock lene se fayeda hai to lelo</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">nbsp </span><span class="s2">= </span><span class="s1">obsp</span><span class="s2">; </span><span class="s4">// mat lo</span>
+            <span class="s2">}</span>
+
+            <span class="s4">//ajj sell karne ke options:</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">obsp </span><span class="s2">+ </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] - </span><span class="s1">fee </span><span class="s2">&gt; </span><span class="s1">ossp</span><span class="s2">) {</span>
+                <span class="s1">nssp </span><span class="s2">= </span><span class="s1">obsp </span><span class="s2">+ </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] - </span><span class="s1">fee</span><span class="s2">; </span><span class="s4">// becha to ajj jinte pe hai utna milega=arr[i] and fee jaegi jeb se</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">nssp </span><span class="s2">= </span><span class="s1">ossp</span><span class="s2">;</span>
+
+            }
+            <span class="s1">ossp </span><span class="s2">= </span><span class="s1">nssp</span><span class="s2">;</span>
+            <span class="s1">obsp </span><span class="s2">= </span><span class="s1">nbsp</span><span class="s2">;</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">ossp</span><span class="s2">);</span>
+
+    }
+
+
+    <span class="s0">public static void </span><span class="s1">buyAndSellStocksInfiniteTxWithFeesCooldown</span><span class="s2">() {</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">arr </span><span class="s2">= {</span><span class="s3">10</span><span class="s2">, </span><span class="s3">20</span><span class="s2">, </span><span class="s3">30</span><span class="s2">};</span>
+        <span class="s0">int </span><span class="s1">obsp </span><span class="s2">= -</span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">];</span>
+        <span class="s0">int </span><span class="s1">ossp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">ocsp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">int </span><span class="s1">nbsp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+            <span class="s0">int </span><span class="s1">nssp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+            <span class="s0">int </span><span class="s1">ncsp </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+
+            <span class="s4">// ajj buy karne ke options</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">ocsp </span><span class="s2">- </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &gt; </span><span class="s1">obsp</span><span class="s2">) { </span><span class="s4">// naya stock arr[i] ka hai</span>
+                // kaunsa kam negetive hai -- kareedah ai to paise gae
+                <span class="s1">nbsp </span><span class="s2">= </span><span class="s1">ocsp </span><span class="s2">- </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]; </span><span class="s4">// purani cooling me se iska price minus kar do</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">nbsp </span><span class="s2">= </span><span class="s1">obsp</span><span class="s2">; </span><span class="s4">// mat lo</span>
+            <span class="s2">}</span>
+
+            <span class="s4">//ajj sell karne ke options:</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">obsp </span><span class="s2">+ </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &gt; </span><span class="s1">ossp</span><span class="s2">) { </span><span class="s4">// bachne pe arr[i] paisa aya</span>
+                <span class="s1">nssp </span><span class="s2">= </span><span class="s1">obsp </span><span class="s2">+ </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]; </span><span class="s4">// becha to ajj jinte pe hai utna milega=arr[i] and fee jaegi jeb se</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">nssp </span><span class="s2">= </span><span class="s1">ossp</span><span class="s2">;</span>
+
+            }
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">ossp </span><span class="s2">&gt; </span><span class="s1">ocsp</span><span class="s2">) {</span>
+                <span class="s1">ncsp </span><span class="s2">= </span><span class="s1">ossp</span><span class="s2">;</span>
+            } <span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">ncsp </span><span class="s2">= </span><span class="s1">ocsp</span><span class="s2">;</span>
+            }
+
+            <span class="s1">ossp </span><span class="s2">= </span><span class="s1">nssp</span><span class="s2">;</span>
+            <span class="s1">obsp </span><span class="s2">= </span><span class="s1">nbsp</span><span class="s2">;</span>
+            <span class="s1">ocsp </span><span class="s2">= </span><span class="s1">ncsp</span><span class="s2">;</span>
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">ossp</span><span class="s2">);</span>
+
+    }
+
+
+    <span class="s0">public static void </span><span class="s1">buyAndSellStocksITwoTx</span><span class="s2">() {</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">arr </span><span class="s2">= {</span><span class="s3">10</span><span class="s2">, </span><span class="s3">20</span><span class="s2">, </span><span class="s3">30</span><span class="s2">};</span>
+        <span class="s4">// left to right move karke find max profit if sold today or before today</span>
+        <span class="s0">int </span><span class="s1">mpist </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s4">// max profit if sold today</span>
+        <span class="s0">int </span><span class="s1">leastsf </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s3">0</span><span class="s2">]; </span><span class="s4">// least so far == yaha buy least point</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dpleft </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">]; </span><span class="s4">// max profit if sold upto today</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &lt; </span><span class="s1">leastsf</span><span class="s2">) {</span><span class="s4">// ye maintain karna hai</span>
+                <span class="s1">leastsf </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">];</span>
+            }
+            <span class="s1">mpist </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] - </span><span class="s1">leastsf</span><span class="s2">; </span><span class="s4">//max profit if sold today,, ajj kahreda least pe becha -- ajj ka answer not best</span>
+
+            // abb pehle dekho aur best nikal abhi tak
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">mpist </span><span class="s2">&gt; </span><span class="s1">dpleft</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]) {</span>
+                <span class="s1">dpleft</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">mpist</span><span class="s2">; </span><span class="s4">//</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">dpleft</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dpleft</span><span class="s2">[</span><span class="s1">i </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]; </span><span class="s4">// pichle me better hai-chalte hue ara hai</span>
+            <span class="s2">}</span>
+        }
+
+
+        <span class="s4">// ulta direction wala loop</span>
+        // ajj buy karna hai to future me kiss din beche jisse max profit hoga
+        <span class="s0">int </span><span class="s1">mpibt </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s4">// max profit if bought today</span>
+        <span class="s0">int </span><span class="s1">maxat </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s3">1</span><span class="s2">]; </span><span class="s4">// max after today</span>
+        <span class="s0">int</span><span class="s2">[] </span><span class="s1">dpright </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">];</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s3">2</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&gt;= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i</span><span class="s2">--) { </span><span class="s4">// loop second last se chalga</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &gt; </span><span class="s1">maxat</span><span class="s2">) {</span>
+                <span class="s1">maxat </span><span class="s2">= </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]; </span><span class="s4">//ise maintain karo hamesha</span>
+            <span class="s2">}</span>
+            <span class="s1">mpibt </span><span class="s2">= </span><span class="s1">maxat </span><span class="s2">- </span><span class="s1">arr</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]; </span><span class="s4">// ajj ki price ghata do future ki max value se ya ajj ki hi value se agar future</span>
+            // me nhi hai to
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">mpibt </span><span class="s2">&gt; </span><span class="s1">dpright</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">]) {</span>
+                <span class="s1">dpright</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">mpibt</span><span class="s2">;</span>
+            } <span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">dpright</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] = </span><span class="s1">dpright</span><span class="s2">[</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">];</span>
+            }
+
+        }
+
+        <span class="s0">int </span><span class="s1">op </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span><span class="s4">//overall profit</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">arr</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s4">// har point pe dpleft me best tx on the left</span>
+            // har point pe dpright me best tx on the right
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">dpleft</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] + </span><span class="s1">dpright</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] &gt; </span><span class="s1">op</span><span class="s2">) {</span>
+                <span class="s1">op </span><span class="s2">= </span><span class="s1">dpleft</span><span class="s2">[</span><span class="s1">i</span><span class="s2">] + </span><span class="s1">dpright</span><span class="s2">[</span><span class="s1">i</span><span class="s2">];</span>
+            }
+
+        }
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">op</span><span class="s2">);</span>
+
+    }
+
+
+}
+</pre>
+</body>
+</html>
